@@ -9,12 +9,12 @@ char *words(int count)
 {
   char *words = "words";
   if (count == 1)
-    	words[strlen(words)-1] = '\0';
-  
+    return "word";
+    //words[strlen(words)-1] = '\0'; 
   return words;
 }
 
-/* print a message reportint the number of words */
+/* print a message reporting the number of words */
 int print_word_count(char **argv)
 {
   int count = 0;
