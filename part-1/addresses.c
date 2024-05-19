@@ -63,6 +63,29 @@ int secondary(int x)
 
 int main(int argc, char **argv)
 { 
+    int iarray[3];
+    for(int i=0; i<3; i++)
+        printf("iarray each cell: %p\n", &iarray[i]);
+    printf("iarray: %p\n", iarray);
+    printf("iarray + 1: %p\n", iarray+1);
+
+    float farray[3];
+    for(int i=0;i<3 ;i++)
+        printf("farray each cell: %p\n", &farray[i]);
+    printf("farray: %p\n", farray);
+    printf("farray + 1: %p\n", farray+1);
+
+    double darray[3];
+    for (int i=0; i < 3; i++)
+        printf("darray each cell: %p\n", &darray[i]);
+    printf("darray: %p\n", darray);
+    printf("darray + 1: %p\n", darray+1);
+
+    char carray[3];
+    for (int i=0; i < 3; i++)
+        printf("carray each cell: %p\n", &carray[i]);
+    printf("carray: %p\n", carray);
+    printf("carray + 1: %p\n", carray+1);
 
     printf("Print function argument addresses:\n");
 
