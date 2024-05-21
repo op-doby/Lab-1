@@ -10,9 +10,6 @@ char* map(char *array, int array_length, char (*f) (char)){
   }
   return mapped_array;
 }
-char foo(char c){
-  return c+1;
-  }
 
 
 char my_get(char c){
@@ -53,30 +50,47 @@ char xoprt(char c){
   return c;
 }
 
+struct fun_desc {
+char *name;
+char (*fun)(char);
+};
+
+struct fun_desc menu_items[] = {{"Get string",&my_get},{"Print string",&cprt},{"Encrypt",&encrypt},{"Decrypt",&decrypt},{"Print Hex and Octal",&xoprt},{NULL,NULL}};
+
+void menu(){
+  char* carray = (char*)(malloc(5*sizeof(char)));
+  int bound = sizeof(struct fun_desc)-1; // ?????? (except the null)
+  char input[6];  
+  while (!feof(stdin))
+  { 
+    printf("Select operation from the following menu: (ctrl^D for exit) \n");
+    for (int i = 0; menu_items[i].name != NULL; i++) {
+        printf("%d) %s\n", i , menu_items[i].name);
+    }
+    printf("Option: ");
+    fgets(input,6,stdin);
+    if(input==NULL) // could be due to ctrl^d or not entering anything
+      break;
+    int choice = atoi(input); //copied from chatgpt
+    if((choice < bound) && (choice>=0))
+      printf("Within bounds\n");
+    else
+    {
+      printf("Not within bounds\n");
+      break;
+    }
+    fgets(input,6,stdin);
+    carray = map(input,5,menu_items[choice].fun);
+  }
+
+  free(carray);
+
+}
 
 int main(int argc, char **argv){
   /* TODO: Test your code */
-  int array_length = 3;
-  char* array = (char*)(malloc(array_length*sizeof(char)));
-  array[0]='1'; array[1]='2'; array[2]='3';
-  char (*foo1)(char) =foo;
-  char* mapped_array = map(array,array_length,foo1);
-  for(int i=0; i<array_length; i++){
-    printf("%c \n",mapped_array[i]);
-  }
-  free(array);
-  free(mapped_array);
-
-  int base_len = 5;
-  char arr1[base_len];
-  char* arr2 = map(arr1, base_len, my_get);
-  char* arr3 = map(arr2, base_len, cprt);
-  char* arr4 = map(arr3, base_len, xoprt);
-  char* arr5 = map(arr4, base_len, encrypt);
-  free(arr2);
-  free(arr3);
-  free(arr4);
-  free(arr5);
+  menu();
+  
 }
   
 
