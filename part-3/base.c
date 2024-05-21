@@ -31,15 +31,15 @@ char cprt(char c){
 char encrypt(char c){
 /* Gets a char c. If c is between 0x20 and 0x4E add 0x20 to its value and return it. Otherwise return c unchanged */
   if(c <= 0x4E && c>=0x20)
-    c= c+0x20;
-  return (char)c;
+    return c+0x20;
+  return c;
 }
 
 char decrypt(char c){
 /* Gets a char c and returns its decrypted form subtractng 0x20 from its value. But if c was not between 0x40 and 0x7E it is returned unchanged */
   if(c <= 0x7E && c>=0x40)
-    return (char)(c-0x20);
-  return (char)c;
+    return c-0x20;
+  return c;
 }
 
 char xoprt(char c){
