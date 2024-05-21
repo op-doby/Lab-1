@@ -87,6 +87,29 @@ int main(int argc, char **argv)
     printf("carray: %p\n", carray);
     printf("carray + 1: %p\n", carray+1);
 
+    int iarray2[] = {1,2,3};
+    char carray2[] = {'a','b','c'};
+    int* iarray2Ptr;
+    char* carray2Ptr;
+    int *iarrayPtr = iarray2;
+    char *carrayPtr = carray2;
+    int i=0;
+    while(iarrayPtr[i]!=(char)0){
+        printf("iarray: %d\n", iarrayPtr[i]);
+        i++;
+    }
+    i=0;
+    while(carrayPtr[i]!=(char)0){
+        printf("iarray: %c\n", carrayPtr[i]);
+        i++;
+    }
+    int *p;
+    printf("local variable p: %p\n", p);
+
+    for (int i=0; i< argc; i++){
+        printf("command line arguments addresses: %p\n", argv[i]);
+    }
+
     printf("Print function argument addresses:\n");
 
     printf("- &argc %p\n", &argc);
@@ -94,6 +117,7 @@ int main(int argc, char **argv)
     printf("- &argv %p\n", &argv);
 	
 	secondary(0);
+    long l = sizeof(carray);
     
     printf("Command line arg addresses (T1e):\n");
     /* task 1 e here */
@@ -106,14 +130,19 @@ void point_at(void *p)
     int local;
     static int addr0 = 2;
     static int addr1;
+    // test(code)->data segment(global/static)->heap-> stack(local variables)
+    //p is a global int pointer (but send as an argument)
+    long dist1 = (size_t)&addr6 - (size_t)p;//global int - global int  
+    long dist2 = (size_t)&local - (size_t)p; // local int - global int   (the local is higher)
+    long dist3 = (size_t)&foo - (size_t)p;// function(lower)- global int
+    long sizeoflong = sizeof(long);
 
-    long dist1 = (size_t)&addr6 - (size_t)p;
-    long dist2 = (size_t)&local - (size_t)p;
-    long dist3 = (size_t)&foo - (size_t)p;
 
     printf("- dist1: (size_t)&addr6 - (size_t)p: %ld\n", dist1);
     printf("- dist2: (size_t)&local - (size_t)p: %ld\n", dist2);
     printf("- dist3: (size_t)&foo - (size_t)p:  %ld\n", dist3);
+    printf("size of long:  %ld\n", sizeoflong);
+
     
     printf("Check long type mem size (T1a):\n");
     /* part of task 1 a here */
