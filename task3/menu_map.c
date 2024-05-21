@@ -69,7 +69,7 @@ void menu(){
         bound++;
     }
     printf("Option: ");
-    if(fgets(input,256,stdin)) // could be due to ctrl^d or not entering anything
+    if(fgets(input,256,stdin)==NULL) // could be due to ctrl^d or not entering anything
       break;
     int choice = atoi(input); 
     if((choice < bound) && (choice>=0))
