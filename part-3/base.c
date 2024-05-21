@@ -59,19 +59,20 @@ struct fun_desc menu_items[] = {{"Get string",&my_get},{"Print string",&cprt},{"
 
 void menu(){
   char* carray = (char*)(malloc(5*sizeof(char)));
-  int bound = sizeof(struct fun_desc)-1; // ?????? (except the null)
-  char input[6];  
+  int bound = 0;
+  char input[256];  
   while (!feof(stdin))
   { 
     printf("Select operation from the following menu: (ctrl^D for exit) \n");
     for (int i = 0; menu_items[i].name != NULL; i++) {
         printf("%d) %s\n", i , menu_items[i].name);
+        bound++;
     }
     printf("Option: ");
-    fgets(input,6,stdin);
+    fgets(input,256,stdin);
     if(input==NULL) // could be due to ctrl^d or not entering anything
       break;
-    int choice = atoi(input); //copied from chatgpt
+    int choice = atoi(input); 
     if((choice < bound) && (choice>=0))
       printf("Within bounds\n");
     else
@@ -79,8 +80,9 @@ void menu(){
       printf("Not within bounds\n");
       break;
     }
-    fgets(input,6,stdin);
-    carray = map(input,5,menu_items[choice].fun);
+    char* temp = carray;
+    carray = map(carray,5,menu_items[choice].fun);
+    free(temp);
   }
 
   free(carray);
